@@ -1,0 +1,47 @@
+<%- include ../partials/header %> <%- include ../partials/categories-navbar %>
+
+<!-- Login -->
+    <div class="container">
+      <div class="login-form">
+        <h1>Login</h1>
+        <!-- Flash message -->
+        <% if(errorMsg !=null && errorMsg.length>0) {%>
+        <div id="flash-msg" class="alert alert-danger">
+          <%=errorMsg %>
+        </div>
+        <%}%>
+        <form action="/user/signin" method="POST">
+
+          <label for="email">Email</label>
+          <input type="text" placeholder="Enter Email" name="email" required />
+
+          <label for="password">Password</label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            name="password"
+            required
+          />
+          
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <!-- <label>
+            <input
+              type="checkbox"
+              checked="checked"
+              name="remember"
+              style="margin-bottom: 15px"
+            />
+            Remember me
+          </label> -->
+          <p>
+            Do not have an account?
+            <a style="color: dodgerblue;" href="/user/signup">Sign Up</a>
+          </p>
+          <div class="buttons">
+            <button type="button" class="cancelbtn">Cancel</button>
+            <button type="submit" class="signupbtn">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+<%- include ../partials/footer %>

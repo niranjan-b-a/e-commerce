@@ -1,0 +1,70 @@
+<%- include ../partials/header %> <%- include ../partials/categories-navbar %>
+<div class="container cart">
+  <% if (cart != null && !cart.paid ) { %>
+  <!-- Cart Items -->
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+      <% products.forEach( product => { %> 
+        <% if(product != null) {%>
+        <tr>
+          <td>
+            <div class="cart-info">
+              <img src="<%= product.imagePath %>" alt="" />
+              <div>
+                <a href="/products/<%=product.category.slug%>/<%=product._id%>"><P style="color: black;"><%= product.title %></p></a>
+                <span>₹ <%= product.price %></span> <br />
+                <a href="/removeAll/<%=product._id%>">remove</a>
+              </div>
+            </div>
+          </td>
+          <td>
+            <!-- <input type="number" value="<%= product.qty %>" min="1" /> -->
+            <div class="product-quantity">
+              <a href="/add-to-cart/<%=product._id%>"
+                    ><i class="fa fa-plus-square" aria-hidden="true"></i
+                  > </a>
+                  <p class="qty-display pt-1">
+                  <%= product.qty %>
+                </p>
+                <a href="/reduce/<%=product._id%>"
+                    ><i class="fa fa-minus-square" aria-hidden="true"></i
+                  ></a>
+            </div>
+          </td>
+          <td>₹ <%= product.totalPrice %></td>
+        </tr>
+        <% } %>
+      <% }) %>  
+    </table>
+    <div class="total-price">
+      <table>
+        <tr>
+          <td>No of Items</td>
+          <td><%= cart.totalQty %></td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td>₹ <%= cart.totalCost %></td>
+        </tr>
+        <!-- <tr>
+          <td>Total</td>
+          <td>$250</td>
+        </tr> -->
+      </table>
+      <a href="/checkout" class="checkout btn">Proceed To Checkout</a>
+    </div>
+    <% }else{ %>
+    <div class="empty-cart row text-center">
+      <div class="col-md-9 col-sm-9 m-auto">
+        <img src="/images/emptycart.png" alt="">
+        <h4>No items in the cart</h4>
+      </div>
+    </div>
+    <% } %> 
+  </div>
+
+<%- include ../partials/footer %>

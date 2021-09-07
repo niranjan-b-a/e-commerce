@@ -1,0 +1,37 @@
+<%- include ../partials/header %> <%- include ../partials/categories-navbar %>
+<div class="w-container">
+  <% if (products.length) { %>
+    <section>
+      <div class="w-title">
+        <h1>Wishlist</h1>
+      </div>
+      <div class="w-product-center">
+        <% products.forEach(product => {%> 
+        <div class="w-product-item">
+          <div class="w-overlay">
+            <a href="/products/<%=product.category.slug%>/<%=product._id%>" class="w-product-thumb">
+              <img src="<%= product.imagePath %> " alt="" />
+            </a>
+          </div>
+          <div class="w-product-info">
+            <a href="/products/<%=product.category.slug%>/<%=product._id%>"><%= product.title %> </a>
+            <h4>₹<%= product.price %></h4>
+          </div>
+          <p class="remove-wish">
+            <a href="/add-to-wishlist/<%= product._id %>">+</a>
+          </p>
+          <div class="w-buttons">
+            <button class="w-atc-button"><a href="/add-to-cart/<%= product._id %>">Add to Cart</a></button>
+          </div>
+        </div>
+        <% }) %> 
+      </div>
+    </section>
+    <% }else {%>
+    <div class="empty-cart">
+        <img src="/images/emptycart.png" alt="empty cart">
+        <h4>No items in the Wishlist</h4>
+    </div>
+      <% } %>  
+</div>
+<%- include ../partials/footer %>

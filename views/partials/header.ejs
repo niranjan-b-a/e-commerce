@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <% if (pageName) { %>
+    <title>Tenzify | <%= pageName %></title>
+    <%} else {%>
+    <title>Shopping Cart</title>
+    <% } %>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://kit.fontawesome.com/91abd10b8f.js"
+      crossorigin="anonymous"
+    ></script>
+      <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+   
+    <!--custome style sheets-->
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/nav.css" />
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Mapbox -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <nav class="header-nav">
+      <label for="hamburger" class="checkbtn"><i class="fas fa-bars"></i></label>
+      <input type="checkbox" id="hamburger">
+      <label for="hamburger" class="sideMenuOverlay overlayId"></label>
+        <label class="logo"><a href="/">Tenzify</a></label>
+        
+        <div class="header-ul">
+
+          <ul>
+              <!-- <li <% if (pageName === "All Products") { %>
+                  class="header-li active"
+                  <%} else {%>
+                    class="header-li nav-item"
+                  <%} %> 
+                  >
+              </li> -->
+            <li class="header-li">
+              <a href="/">Home</a>
+            </li>
+      
+            <% if (categories) { %>
+              <% categories.forEach( category => { %>
+                <li <% if (pageName === category.title) { %>
+                  class="header-li active"
+                  <% } else { %>
+                    class="header-li"
+                  <% } %> 
+                  >
+  
+                <a <% if (pageName === category.title) { %>
+                  id="active-a"
+                  <% } else { %>
+                    id=""
+                  <% } %> 
+                  href="/products/<%= category.slug %>"><%= category.title %>
+                </a>
+              </li>
+                <% }) %>
+              <% } %>
+              <li class="header-li"><a href="/pages/contact-us"><span>Contact</span> </a></li>
+              <li class="header-li search">
+                <form class="form-inline" action="/products/search" method="GET">
+                  <input
+                    class="search-input"
+                    type="search"
+                    placeholder="Search"
+                    name="search"
+                  />
+                </form>
+              </li>
+              <% if (login) { %>
+                <div class="user-profile-mobile">
+                    <li class="header-li">
+                      <p class="upm-title">
+                        My profile
+                      </p>
+                    </li>
+                    <li class="header-li">
+                      <!-- <a aria-disabled="true" class="u-dropdown-item" >Hello, <%=currentUser.username%></a> -->
+                    </li>
+                    <li class="header-li">
+                      <a class="um-dropdown-item" href="/user/profile">My Account</a>
+                    </li>
+                    <li class="header-li">
+                      <a class="um-dropdown-item" href="/wishlist">My Wishlist</a>
+                    </li>
+                    <li class="header-li">
+                      <a class="um-dropdown-item" href="/shopping-cart">My Cart</a>
+                    </li>
+                    <li class="header-li">
+                      <a class="um-dropdown-item" href="/user/logout">Logout</a>
+                    </li>
+                  </div>
+                <% } else {%>
+                  <div class="user-profile-mobile">
+                    <li class="header-li">
+                      <p class="upm-title">
+                        My profile
+                      </p>
+                    </li>
+                    <li class="header-li">
+                      <a class="um-dropdown-item" href="/user/signup">Register</a>
+                    </li>
+                    <li class="header-li">
+                      <a class="um-dropdown-item" href="/user/signin">Login</a>
+                    </li>
+                  </div>
+                <% }%>  
+            </ul>
+        </div>
+          <div class="shopping-cart">
+              <div class="mobile-search-icon">
+                <i class="bx bx-search"></i>
+              </div>
+              <div class="mobile-search">
+                <form class="form-inline" action="/products/search" method="GET">
+                  <input
+                    class="m-search"
+                    type="search"
+                    placeholder="Search"
+                    name="search"
+                  />
+                </form>
+                <sapn class="cancel-search">+</span>
+              </div>
+            <% if (login) { %>
+                <li class="header-li user-li hons" id="userli">
+                  <a href="/user/profile" class="u-dropdown-toggle">
+                    <i style="font-size: 2.5rem;" class="bx bx-user"></i>
+                  </a>
+                  <div class="u-dropdown-menu" >
+                    <!-- <a aria-disabled="true" class="u-dropdown-item" >Hello, <%=currentUser.username%></a> -->
+                    <a class="u-dropdown-item" href="/user/profile">MyAccount</a>
+                    <a class="u-dropdown-item" href="/user/logout">Logout</a>
+                  </div>
+                </li>
+                <% } else {%>
+                  <li class="header-li user-li hons" id="userli">
+                  <a class="u-dropdown-toggle">
+                    <i style="font-size: 2.5rem;" class="bx bx-user"></i>
+                  </a>
+                  <div class="u-dropdown-menu" >
+                    <a class="u-dropdown-item" href="/user/signup">Register</a>
+                    <a class="u-dropdown-item" href="/user/signin">Login</a>
+                  </div>
+                </li>
+                <% }%>
+              
+              <div class="icon hons">
+                <a href="/wishlist">
+                  <i class="bx bx-heart"></i>
+                  <% if(session.wish) {%> 
+                  <span class="d-flex"><%= session.wish.totalQty %></span>
+                  <% }else{ %>
+                    <span class="d-flex">0</span>
+                    <% } %>  
+                </a>
+              </div>
+              <a href="/shopping-cart" class="icon hons">
+                <i class="bx bx-cart"></i>
+                <%if(session.cart) {%> 
+                <span class="d-flex cart-icon"><%= session.cart.totalQty %></span>
+                <% }else{ %>
+                  <span class="d-flex cart-icon">0</span>
+                  <% } %>  
+              </a>
+        </div>
+    </nav>
+
